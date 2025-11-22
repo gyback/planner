@@ -15,6 +15,8 @@ import {
 import { enGB, svSE } from "@clerk/localizations";
 import { i18n } from "~/i18n-config";
 import { cookies } from "next/headers";
+import { ThemeProvider } from "~/components/theme-provider";
+import { ModeToggle } from "~/components/theme-mode-toggle";
 
 export const metadata: Metadata = {
   title: "Planner",
@@ -33,27 +35,30 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value ?? i18n.defaultLocale;
   return (
-    <ClerkProvider localization={lang === "sv" ? svSE : enGB}>
-      <html lang={lang} className={`${geist.variable}`}>
-        <body>
-          <TRPCReactProvider>
-            <header>
-              <SignedOut>
-                <SignInButton />
-                <SignUpButton>
-                  <button className="text-ceramic-white h-10 cursor-pointer rounded-full bg-[#6c47ff] px-4 text-sm font-medium sm:h-12 sm:px-5 sm:text-base">
-                    Sign Up
-                  </button>
-                </SignUpButton>
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
-            </header>
-            {children}
-          </TRPCReactProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang={lang} className={`${geist.variable}`}>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClerkProvider localization={lang === "sv" ? svSE : enGB}>
+            <TRPCReactProvider>
+              <header className="flex items-center justify-end gap-4 p-4">
+                <ModeToggle />
+                <SignedOut>
+                  <SignInButton />
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+              </header>
+              {children}
+            </TRPCReactProvider>
+          </ClerkProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
