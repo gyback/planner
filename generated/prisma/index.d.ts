@@ -920,6 +920,7 @@ export namespace Prisma {
   export type TaskMinAggregateOutputType = {
     id: string | null
     parentId: string | null
+    ownerId: string | null
     title: string | null
     type: number | null
     status: number | null
@@ -934,6 +935,7 @@ export namespace Prisma {
   export type TaskMaxAggregateOutputType = {
     id: string | null
     parentId: string | null
+    ownerId: string | null
     title: string | null
     type: number | null
     status: number | null
@@ -948,6 +950,7 @@ export namespace Prisma {
   export type TaskCountAggregateOutputType = {
     id: number
     parentId: number
+    ownerId: number
     title: number
     type: number
     status: number
@@ -978,6 +981,7 @@ export namespace Prisma {
   export type TaskMinAggregateInputType = {
     id?: true
     parentId?: true
+    ownerId?: true
     title?: true
     type?: true
     status?: true
@@ -992,6 +996,7 @@ export namespace Prisma {
   export type TaskMaxAggregateInputType = {
     id?: true
     parentId?: true
+    ownerId?: true
     title?: true
     type?: true
     status?: true
@@ -1006,6 +1011,7 @@ export namespace Prisma {
   export type TaskCountAggregateInputType = {
     id?: true
     parentId?: true
+    ownerId?: true
     title?: true
     type?: true
     status?: true
@@ -1107,6 +1113,7 @@ export namespace Prisma {
   export type TaskGroupByOutputType = {
     id: string
     parentId: string | null
+    ownerId: string
     title: string
     type: number
     status: number
@@ -1140,6 +1147,7 @@ export namespace Prisma {
   export type TaskSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     parentId?: boolean
+    ownerId?: boolean
     title?: boolean
     type?: boolean
     status?: boolean
@@ -1157,6 +1165,7 @@ export namespace Prisma {
   export type TaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     parentId?: boolean
+    ownerId?: boolean
     title?: boolean
     type?: boolean
     status?: boolean
@@ -1172,6 +1181,7 @@ export namespace Prisma {
   export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     parentId?: boolean
+    ownerId?: boolean
     title?: boolean
     type?: boolean
     status?: boolean
@@ -1187,6 +1197,7 @@ export namespace Prisma {
   export type TaskSelectScalar = {
     id?: boolean
     parentId?: boolean
+    ownerId?: boolean
     title?: boolean
     type?: boolean
     status?: boolean
@@ -1198,7 +1209,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "parentId" | "title" | "type" | "status" | "deadline" | "priority" | "notes" | "effort" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "parentId" | "ownerId" | "title" | "type" | "status" | "deadline" | "priority" | "notes" | "effort" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | Task$parentArgs<ExtArgs>
     Subtasks?: boolean | Task$SubtasksArgs<ExtArgs>
@@ -1220,6 +1231,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       parentId: string | null
+      ownerId: string
       title: string
       type: number
       status: number
@@ -1656,6 +1668,7 @@ export namespace Prisma {
   interface TaskFieldRefs {
     readonly id: FieldRef<"Task", 'String'>
     readonly parentId: FieldRef<"Task", 'String'>
+    readonly ownerId: FieldRef<"Task", 'String'>
     readonly title: FieldRef<"Task", 'String'>
     readonly type: FieldRef<"Task", 'Int'>
     readonly status: FieldRef<"Task", 'Int'>
@@ -2139,6 +2152,7 @@ export namespace Prisma {
   export const TaskScalarFieldEnum: {
     id: 'id',
     parentId: 'parentId',
+    ownerId: 'ownerId',
     title: 'title',
     type: 'type',
     status: 'status',
@@ -2247,6 +2261,7 @@ export namespace Prisma {
     NOT?: TaskWhereInput | TaskWhereInput[]
     id?: StringFilter<"Task"> | string
     parentId?: StringNullableFilter<"Task"> | string | null
+    ownerId?: StringFilter<"Task"> | string
     title?: StringFilter<"Task"> | string
     type?: IntFilter<"Task"> | number
     status?: IntFilter<"Task"> | number
@@ -2263,6 +2278,7 @@ export namespace Prisma {
   export type TaskOrderByWithRelationInput = {
     id?: SortOrder
     parentId?: SortOrderInput | SortOrder
+    ownerId?: SortOrder
     title?: SortOrder
     type?: SortOrder
     status?: SortOrder
@@ -2282,6 +2298,7 @@ export namespace Prisma {
     OR?: TaskWhereInput[]
     NOT?: TaskWhereInput | TaskWhereInput[]
     parentId?: StringNullableFilter<"Task"> | string | null
+    ownerId?: StringFilter<"Task"> | string
     title?: StringFilter<"Task"> | string
     type?: IntFilter<"Task"> | number
     status?: IntFilter<"Task"> | number
@@ -2298,6 +2315,7 @@ export namespace Prisma {
   export type TaskOrderByWithAggregationInput = {
     id?: SortOrder
     parentId?: SortOrderInput | SortOrder
+    ownerId?: SortOrder
     title?: SortOrder
     type?: SortOrder
     status?: SortOrder
@@ -2320,6 +2338,7 @@ export namespace Prisma {
     NOT?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Task"> | string
     parentId?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    ownerId?: StringWithAggregatesFilter<"Task"> | string
     title?: StringWithAggregatesFilter<"Task"> | string
     type?: IntWithAggregatesFilter<"Task"> | number
     status?: IntWithAggregatesFilter<"Task"> | number
@@ -2333,6 +2352,7 @@ export namespace Prisma {
 
   export type TaskCreateInput = {
     id?: string
+    ownerId: string
     title: string
     type?: number
     status?: number
@@ -2349,6 +2369,7 @@ export namespace Prisma {
   export type TaskUncheckedCreateInput = {
     id?: string
     parentId?: string | null
+    ownerId: string
     title: string
     type?: number
     status?: number
@@ -2363,6 +2384,7 @@ export namespace Prisma {
 
   export type TaskUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
@@ -2379,6 +2401,7 @@ export namespace Prisma {
   export type TaskUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
@@ -2394,6 +2417,7 @@ export namespace Prisma {
   export type TaskCreateManyInput = {
     id?: string
     parentId?: string | null
+    ownerId: string
     title: string
     type?: number
     status?: number
@@ -2407,6 +2431,7 @@ export namespace Prisma {
 
   export type TaskUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
@@ -2421,6 +2446,7 @@ export namespace Prisma {
   export type TaskUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
@@ -2529,6 +2555,7 @@ export namespace Prisma {
   export type TaskCountOrderByAggregateInput = {
     id?: SortOrder
     parentId?: SortOrder
+    ownerId?: SortOrder
     title?: SortOrder
     type?: SortOrder
     status?: SortOrder
@@ -2550,6 +2577,7 @@ export namespace Prisma {
   export type TaskMaxOrderByAggregateInput = {
     id?: SortOrder
     parentId?: SortOrder
+    ownerId?: SortOrder
     title?: SortOrder
     type?: SortOrder
     status?: SortOrder
@@ -2564,6 +2592,7 @@ export namespace Prisma {
   export type TaskMinOrderByAggregateInput = {
     id?: SortOrder
     parentId?: SortOrder
+    ownerId?: SortOrder
     title?: SortOrder
     type?: SortOrder
     status?: SortOrder
@@ -2958,6 +2987,7 @@ export namespace Prisma {
 
   export type TaskCreateWithoutSubtasksInput = {
     id?: string
+    ownerId: string
     title: string
     type?: number
     status?: number
@@ -2973,6 +3003,7 @@ export namespace Prisma {
   export type TaskUncheckedCreateWithoutSubtasksInput = {
     id?: string
     parentId?: string | null
+    ownerId: string
     title: string
     type?: number
     status?: number
@@ -2991,6 +3022,7 @@ export namespace Prisma {
 
   export type TaskCreateWithoutParentInput = {
     id?: string
+    ownerId: string
     title: string
     type?: number
     status?: number
@@ -3005,6 +3037,7 @@ export namespace Prisma {
 
   export type TaskUncheckedCreateWithoutParentInput = {
     id?: string
+    ownerId: string
     title: string
     type?: number
     status?: number
@@ -3040,6 +3073,7 @@ export namespace Prisma {
 
   export type TaskUpdateWithoutSubtasksInput = {
     id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
@@ -3055,6 +3089,7 @@ export namespace Prisma {
   export type TaskUncheckedUpdateWithoutSubtasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
@@ -3088,6 +3123,7 @@ export namespace Prisma {
     NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
     id?: StringFilter<"Task"> | string
     parentId?: StringNullableFilter<"Task"> | string | null
+    ownerId?: StringFilter<"Task"> | string
     title?: StringFilter<"Task"> | string
     type?: IntFilter<"Task"> | number
     status?: IntFilter<"Task"> | number
@@ -3101,6 +3137,7 @@ export namespace Prisma {
 
   export type TaskCreateManyParentInput = {
     id?: string
+    ownerId: string
     title: string
     type?: number
     status?: number
@@ -3114,6 +3151,7 @@ export namespace Prisma {
 
   export type TaskUpdateWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
@@ -3128,6 +3166,7 @@ export namespace Prisma {
 
   export type TaskUncheckedUpdateWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
@@ -3142,6 +3181,7 @@ export namespace Prisma {
 
   export type TaskUncheckedUpdateManyWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     type?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number

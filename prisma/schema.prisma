@@ -16,6 +16,7 @@ model Task {
   parentId  String?
   parent    Task?    @relation("TaskToSubtasks", fields: [parentId], references: [id])
   Subtasks  Task[]   @relation("TaskToSubtasks")
+  ownerId   String
   title     String
   type      Int      @default(2)
   status    Int      @default(0)

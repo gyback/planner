@@ -124,6 +124,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.TaskScalarFieldEnum = {
   id: 'id',
   parentId: 'parentId',
+  ownerId: 'ownerId',
   title: 'title',
   type: 'type',
   status: 'status',
