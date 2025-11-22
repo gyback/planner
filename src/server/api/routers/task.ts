@@ -15,12 +15,23 @@ export const taskRouter = createTRPCRouter({
     }),
 
   getLatestList: protectedProcedure.query(async ({ ctx }) => {
-    const tasks = await ctx.db.task.findMany({
+    const taskList = await ctx.db.task.findMany({
       where: { ownerId: ctx.user.id },
       orderBy: { createdAt: "desc" },
       take: 5,
     });
 
-    return tasks ?? [];
+    return taskList ?? [];
   }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.task.delete({
+        where: {
+          id: input.id,
+          ownerId: ctx.user.id,
+        },
+      });
+    }),
 });
