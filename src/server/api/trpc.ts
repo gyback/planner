@@ -6,11 +6,13 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { TRPCClientError } from "@trpc/client";
 
 /**
  * 1. CONTEXT
@@ -82,11 +84,11 @@ export const createTRPCRouter = t.router;
 const timingMiddleware = t.middleware(async ({ next, path }) => {
   const start = Date.now();
 
-  if (t._config.isDev) {
-    // artificial delay in dev
-    const waitMs = Math.floor(Math.random() * 400) + 100;
-    await new Promise((resolve) => setTimeout(resolve, waitMs));
-  }
+  // if (t._config.isDev) {
+  //   // artificial delay in dev
+  //   const waitMs = Math.floor(Math.random() * 400) + 100;
+  //   await new Promise((resolve) => setTimeout(resolve, waitMs));
+  // }
 
   const result = await next();
 
@@ -104,3 +106,44 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/**
+ * Middleware that checks if a user is authenticated.
+ *
+ * Adds a user object to the context if authenticated.
+ */
+export const enforceAuthMiddleware = t.middleware(async ({ ctx, next }) => {
+  const { isAuthenticated } = await auth();
+
+  if (!isAuthenticated) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You must be logged in to access this resource.",
+    });
+  }
+
+  // Here you would normally verify the token and fetch user data.
+  // For demonstration, we'll assume the token is valid and create a mock user.
+  const user = await currentUser();
+
+  if (!user) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "User not found." });
+  }
+
+  return next({
+    ctx: {
+      ...ctx,
+      user,
+    },
+  });
+});
+
+/**
+ * Protected (authenticated) procedure
+ *
+ * This is the base piece you use to build new queries and mutations on your tRPC API that
+ * require a user to be logged in. It verifies that there is a user object in the context.
+ */
+export const protectedProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(enforceAuthMiddleware);

@@ -1,4 +1,5 @@
 ﻿import { getDictionary } from "~/lib/dictionaries";
+import { Waitlist } from "@clerk/nextjs";
 
 export default async function WelcomePage() {
   const dictionary = await getDictionary();
@@ -11,6 +12,9 @@ export default async function WelcomePage() {
         <p className="mb-4 text-center text-lg text-gray-700">
           {dictionary.welcomePage.subtitle}
         </p>
+        <div className="mt-6 flex justify-center space-x-4">
+          <Waitlist />
+        </div>
       </div>
     </div>
   );
