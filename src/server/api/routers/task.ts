@@ -1,15 +1,25 @@
 import { z } from "zod";
-
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTaskInputSchema,
+  StatusToInternalStatusMap,
+  TaskPriorityScheme,
+  TaskStatusScheme,
+  TaskTypeScheme,
+  TaskTypeToInternalTypeMap,
+} from "~/models/task";
 
 export const taskRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(z.object({ title: z.string().min(1) }))
+    .input(createTaskInputSchema)
     .mutation(async ({ ctx, input }) => {
       return ctx.db.task.create({
         data: {
           title: input.title,
           ownerId: ctx.user.id,
+          type: TaskTypeToInternalTypeMap[input.type],
+          status: StatusToInternalStatusMap[input.status],
+          deadline: input.deadline,
         },
       });
     }),

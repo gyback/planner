@@ -100,6 +100,7 @@ exports.Prisma.TaskScalarFieldEnum = {
   title: 'title',
   type: 'type',
   status: 'status',
+  startDate: 'startDate',
   deadline: 'deadline',
   priority: 'priority',
   notes: 'notes',
@@ -166,7 +167,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -175,13 +175,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Task {\n  id        String    @id @default(uuid())\n  parentId  String?\n  parent    Task?     @relation(\"TaskToSubtasks\", fields: [parentId], references: [id])\n  Subtasks  Task[]    @relation(\"TaskToSubtasks\")\n  ownerId   String\n  title     String\n  type      Int       @default(2)\n  status    Int       @default(0)\n  deadline  DateTime?\n  priority  Int?\n  notes     String?\n  effort    Int?\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n\n  @@index([title])\n}\n",
-  "inlineSchemaHash": "23b8c71de792f45c36d914675ec9e9caaf6ec11d400d194f9a851b91267cdfc5",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Task {\n  id        String    @id @unique @default(uuid())\n  parentId  String?\n  parent    Task?     @relation(\"TaskToSubtasks\", fields: [parentId], references: [id])\n  Subtasks  Task[]    @relation(\"TaskToSubtasks\")\n  ownerId   String\n  title     String\n  type      Int       @default(2)\n  status    Int       @default(0)\n  startDate DateTime?\n  deadline  DateTime?\n  priority  Int?\n  notes     String?\n  effort    Int?\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n\n  @@index([title])\n}\n",
+  "inlineSchemaHash": "14f3a1af48c1ae0cc19f8ceb91ab668ff840a93059d62b12f65e04d668089913",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Task\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parent\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToSubtasks\"},{\"name\":\"Subtasks\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToSubtasks\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"deadline\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"priority\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"effort\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Task\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parent\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToSubtasks\"},{\"name\":\"Subtasks\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToSubtasks\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deadline\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"priority\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"effort\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

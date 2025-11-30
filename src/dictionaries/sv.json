@@ -2,5 +2,75 @@
   "welcomePage": {
     "title": "Välkommen till vår planeringsapp",
     "subtitle": "Byggd för att hjälpa dig organisera dina uppgifter effektivt."
+  },
+  "taskType": {
+    "1": "Kurs",
+    "2": "Uppgift",
+    "3": "Projekt",
+    "4": "Rapport",
+    "5": "Seminarium",
+    "6": "Personligt"
+  },
+  "taskStatus": {
+    "1": "Skapad",
+    "2": "Pågående",
+    "3": "Slutförd",
+    "4": "Pausad",
+    "5": "Avbruten"
+  },
+  "taskPage": {
+    "columns": {
+      "title": "Titel",
+      "status": "Status",
+      "type": "Typ",
+      "deadline": "Deadline",
+      "priority": "Prioritet",
+      "effort": "Insats"
+    },
+    "createTaskDialog": {
+      "title": "Skapa ny uppgift",
+      "fields": {
+        "title": "Titel",
+        "description": "Beskrivning",
+        "type": "Typ",
+        "status": "Status",
+        "priority": "Prioritet",
+        "deadline": "Deadline",
+        "effort": "Insats"
+      },
+      "form": {
+        "title": {
+          "label": "Titel",
+          "description": "Ange uppgiftens titel."
+        },
+        "type": {
+          "label": "Typ",
+          "description": "Välj vilken typ av uppgift du skapar.",
+          "selectItems": {
+            "course": "Kurs",
+            "assignment": "Uppgift",
+            "project": "Projekt",
+            "report": "Rapport",
+            "seminar": "Seminarium",
+            "personal": "Personligt"
+          }
+        },
+        "status": {
+          "label": "Status",
+          "description": "Välj den initiala statusen för uppgiften.",
+          "selectItems": {
+            "created": "Skapad",
+            "inProgress": "Pågående",
+            "completed": "Slutförd",
+            "onHold": "Pausad",
+            "cancelled": "Avbruten"
+          }
+        },
+        "submitButton": {
+          "default": "Skapa uppgift",
+          "pending": "Skapar..."
+        }
+      }
+    }
   }
 }

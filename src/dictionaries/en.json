@@ -2,5 +2,75 @@
   "welcomePage": {
     "title": "Welcome to Our Planner App",
     "subtitle": "Here to help you organize your tasks efficiently."
+  },
+  "taskType": {
+    "1": "Course",
+    "2": "Assignment",
+    "3": "Project",
+    "4": "Report",
+    "5": "Seminar",
+    "6": "Personal"
+  },
+  "taskStatus": {
+    "1": "Created",
+    "2": "In Progress",
+    "3": "Completed",
+    "4": "On Hold",
+    "5": "Cancelled"
+  },
+  "taskPage": {
+    "columns": {
+      "title": "Title",
+      "status": "Status",
+      "type": "Type",
+      "deadline": "Deadline",
+      "priority": "Priority",
+      "effort": "Effort"
+    },
+    "createTaskDialog": {
+      "title": "Create New Task",
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "type": "Type",
+        "status": "Status",
+        "priority": "Priority",
+        "deadline": "Deadline",
+        "effort": "Effort"
+      },
+      "form": {
+        "title": {
+          "label": "Title",
+          "description": "Enter the title of the task."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Select the type of task you are creating.",
+          "selectItems": {
+            "course": "Course",
+            "assignment": "Assignment",
+            "project": "Project",
+            "report": "Report",
+            "seminar": "Seminar",
+            "personal": "Personal"
+          }
+        },
+        "status": {
+          "label": "Status",
+          "description": "Select the initial status of the task.",
+          "selectItems": {
+            "created": "Created",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "onHold": "On Hold",
+            "cancelled": "Cancelled"
+          }
+        },
+        "submitButton": {
+          "default": "Create Task",
+          "pending": "Creating..."
+        }
+      }
+    }
   }
 }

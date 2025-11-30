@@ -12,7 +12,7 @@ datasource db {
 }
 
 model Task {
-  id        String    @id @default(uuid())
+  id        String    @id @unique @default(uuid())
   parentId  String?
   parent    Task?     @relation("TaskToSubtasks", fields: [parentId], references: [id])
   Subtasks  Task[]    @relation("TaskToSubtasks")
@@ -20,6 +20,7 @@ model Task {
   title     String
   type      Int       @default(2)
   status    Int       @default(0)
+  startDate DateTime?
   deadline  DateTime?
   priority  Int?
   notes     String?
