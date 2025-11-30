@@ -93,6 +93,22 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.TaskTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CourseScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.TaskScalarFieldEnum = {
   id: 'id',
   parentId: 'parentId',
@@ -106,7 +122,8 @@ exports.Prisma.TaskScalarFieldEnum = {
   notes: 'notes',
   effort: 'effort',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  courseId: 'courseId'
 };
 
 exports.Prisma.SortOrder = {
@@ -126,6 +143,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
+  TaskType: 'TaskType',
+  Course: 'Course',
   Task: 'Task'
 };
 /**
@@ -175,13 +194,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Task {\n  id        String    @id @unique @default(uuid())\n  parentId  String?\n  parent    Task?     @relation(\"TaskToSubtasks\", fields: [parentId], references: [id])\n  Subtasks  Task[]    @relation(\"TaskToSubtasks\")\n  ownerId   String\n  title     String\n  type      Int       @default(2)\n  status    Int       @default(0)\n  startDate DateTime?\n  deadline  DateTime?\n  priority  Int?\n  notes     String?\n  effort    Int?\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n\n  @@index([title])\n}\n",
-  "inlineSchemaHash": "14f3a1af48c1ae0cc19f8ceb91ab668ff840a93059d62b12f65e04d668089913",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel TaskType {\n  id        String   @id @unique @default(uuid())\n  name      String   @unique\n  ownerId   String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  tasks Task[]\n}\n\nmodel Course {\n  id        String   @id @unique @default(uuid())\n  name      String\n  ownerId   String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  tasks     Task[]\n\n  @@index([name])\n}\n\nmodel Task {\n  id        String    @id @unique @default(uuid())\n  parentId  String?\n  parent    Task?     @relation(\"TaskToSubtasks\", fields: [parentId], references: [id])\n  Subtasks  Task[]    @relation(\"TaskToSubtasks\")\n  ownerId   String\n  title     String\n  type      String\n  status    Int       @default(0)\n  startDate DateTime?\n  deadline  DateTime?\n  priority  Int?\n  notes     String?\n  effort    Int?\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  TaskType  TaskType  @relation(fields: [type], references: [id])\n  Course    Course?   @relation(fields: [courseId], references: [id])\n  courseId  String?\n\n  @@index([title])\n}\n",
+  "inlineSchemaHash": "c4c5211edc8e4d14f192894bf3f21c4f9f4012c7792216f044d1dda0f8c18f89",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Task\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parent\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToSubtasks\"},{\"name\":\"Subtasks\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToSubtasks\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deadline\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"priority\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"effort\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"TaskType\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"tasks\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToTaskType\"}],\"dbName\":null},\"Course\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"tasks\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"CourseToTask\"}],\"dbName\":null},\"Task\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parent\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToSubtasks\"},{\"name\":\"Subtasks\",\"kind\":\"object\",\"type\":\"Task\",\"relationName\":\"TaskToSubtasks\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deadline\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"priority\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"effort\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"TaskType\",\"kind\":\"object\",\"type\":\"TaskType\",\"relationName\":\"TaskToTaskType\"},{\"name\":\"Course\",\"kind\":\"object\",\"type\":\"Course\",\"relationName\":\"CourseToTask\"},{\"name\":\"courseId\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
